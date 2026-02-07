@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator Bonus SA</title>
+
+<style>
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:linear-gradient(135deg,#8e0e00,#1f1c18);
+  padding:20px;
+  min-height:100vh;
+}
+
+.card{
+  max-width:520px;
+  margin:auto;
+  background:#fff;
+  padding:25px;
+  border-radius:14px;
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+h2, h3{ text-align:center; color:#c62828; margin-top:0; }
+
+label{ font-weight:600; margin-top:12px; display:block; font-size: 14px; }
+
+input, select{
+  width:100%;
+  padding:11px;
+  margin-top:6px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+button{
+  display:block;
+  margin:20px auto 0;
+  background:linear-gradient(135deg,#c62828,#8e0000);
+  color:white;
+  border:none;
+  border-radius:10px;
+  font-size:17px;
+  padding:15px;
+  font-weight:bold;
+  cursor:pointer;
+  width: 100%;
+}
+
+button:active { transform: scale(0.98); }
+
+/* RESULT AREA */
+.result{
+  margin-top:25px;
+  padding:18px;
+  border-radius:12px;
+  border-left:6px solid #c62828;
+  background: #f9f9f9;
+  display: none; /* Sembunyi sampai kode benar */
+}
+
+.badge{ padding:4px 10px; border-radius:20px; font-size:12px; font-weight:bold; color:white; }
+.badge-Red{background:#c62828}
+.badge-Yellow{background:#f9a825;color:#000}
+.badge-Green{background:#2e7d32}
+.badge-Black{background:#263238}
+.badge-Platinum{background:#6a1b9a}
+
+.progress{ background:#ddd; border-radius:20px; height:10px; margin:10px 0; overflow:hidden; }
+.bar{ height:100%; background:#c62828; transition:0.5s; }
+hr { border: 0; border-top: 1px solid #ddd; margin: 15px 0; }
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.sub-box {
+  background: #f0f0f0;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.sub-box label { 
+  color: #c62828; 
+  font-size: 10px; 
+  text-transform: uppercase; 
+  margin-bottom: 2px;
+}
+
+.sub-box b { color: #333; font-size: 13px; }
+
+.total-line { 
+  border-top: 1px dashed #bbb; 
+  margin-top: 5px; 
+  padding-top: 5px; 
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Kalkulator Bonus SA</h2>
+
+  <label>Nama SA</label>
+<select id="nama">
+<option value="">-- Pilih Nama --</option>
+<option>Alam Kurnia</option>
+<option>Alif Fadillah Harahap</option>
+<option>Bambang Hermanto</option>
+<option>Dava Azmy Muzaky</option>
+<option>Ega Angga Resta</option>
+<option>Jassen Marvel Wijaya</option>
+<option>Michelle Novelia Stefhany</option>
+<option>Muhammad Farlan Alfariza</option>
+<option>Muhammad Rifa</option>
+<option>Ni Kadek Intan Ardani</option>
+<option>Rahmat Akbar</option>
+<option>Winny Febiyani</option>
+</select>
+
+  <div class="grid-2">
+    <div>
+      <label>Level IS</label>
+      <select id="is">
+        <option value="138000">IS 1</option>
+        <option value="158000">IS 2</option>
+        <option value="178000">IS 3</option>
+        <option value="198000">IS 4</option>
+      </select>
+    </div>
+    <div>
+      <label>Clock In (Hari)</label>
+      <input type="number" id="hari">
+    </div>
+  </div>
+
+<label>Vintage (Masa Bergabung)</label>
+<select id="vintage">
+  <option value="0">M0</option>
+  <option value="10000000">M1 (10 Juta)</option>
+  <option value="25000000">M2 (25 Juta)</option>
+  <option value="45000000">M3 (45 Juta)</option>
+  <option value="55000000">M4 (55 Juta)</option>
+  <option value="65000000">M5 (65 Juta)</option>
+  <option value="75000000">M6 (75 Juta)</option>
+  <option value="85000000">M7 (85 Juta)</option>
+  <option value="100000000">M8 - M12 (100 Juta)</option>
+  <option value="130000000">M13 - M24 (130 Juta)</option>
+  <option value="150000000">M25 - M36 (150 Juta)</option>
+  <option value="160000000">M37 - M48 (160 Juta)</option>
+  <option value="170000000">M49 - M60 (170 Juta)</option>
+  <option value="180000000">M61 - M72 (180 Juta)</option>
+  <option value="200000000">M72+ (200 Juta)</option>
+</select>
+
+  <label>Total Volume (JUTA)</label>
+  <input type="number" id="volume">
+
+  <hr>
+  <h3>NOS Achievement</h3>
+  <div class="grid-2">
+    <div><label>FEL NC</label><input type="number" id="FNC"></div>
+    <div><label>FEL RO/GOER</label><input type="number" id="FRO"></div>
+    <div><label>Non-FEL NC</label><input type="number" id="NNC"></div>
+    <div><label>Non-FEL RO/GOER</label><input type="number" id="NRO"></div>
+  </div>
+
+  <hr>
+  <h3>Premi VAS & SAI</h3>
+  <label>Total Premi VAS</label>
+  <input type="number" id="vP" placeholder="Input Rupiah">
+  
+  <label>Total Premi SAI</label>
+  <input type="number" id="sP" placeholder="Input Rupiah">
+
+  <label> NL</label>
+  <select id="nl">
+    <option value="0">Tanpa Potongan</option>
+    <option value="0"> NL 1 (0%)</option>
+    <option value="0.10">NL 2 (10%)</option>
+    <option value="0.20">NL 3 (20%)</option>
+    <option value="0.30">NL 4 (30%)</option>
+  </select>
+
+  <button onclick="mintaAkses()">HITUNG BONUS</button>
+
+  <div id="hasil" class="result"></div>
+</div>
+
+<script>
+// KODE AKSES (DDMMYY)
+const akses = {
+    "Alam Kurnia": "140805",
+    "Alif Fadillah Harahap": "090401",
+    "Bambang Hermanto": "060298",
+    "Dava Azmy Muzaky": "200103",
+    "Ega Angga Resta": "030906",
+    "Jassen Marvel Wijaya": "080107",
+    "Michelle Novelia Stefhany": "061105",
+    "Muhammad Farlan Alfariza": "240503",
+    "Muhammad Rifa": "301104",
+    "Ni Kadek Intan Ardani": "140305",
+    "Rahmat Akbar": "071098",
+    "Winny Febiyani": "240207"
+};
+
+function mintaAkses() {
+    const nama = document.getElementById("nama").value;
+    if (!nama) return alert("Pilih Nama SA dulu!");
+
+    const userPass = prompt(`Masukkan Kode Akses untuk ${nama}:`);
+    
+    // Cek apakah password cocok dengan nama yang dipilih
+    if (userPass === akses[nama]) {
+        hitungSemua();
+    } else if (userPass !== null) {
+        alert("Kode Salah! Kamu tidak punya akses.");
+    }
+}
+
+function hitungSemua() {
+    const nama = document.getElementById("nama").value;
+    const hari = +document.getElementById("hari").value;
+    const vol = +document.getElementById("volume").value; // Input: 100000000
+    const vPremi = +document.getElementById("vP").value || 0;
+    const sPremi = +document.getElementById("sP").value || 0;
+    const potRate = +document.getElementById("nl").value;
+    const targetMinimal = +document.getElementById("vintage").value; // Dari value dropdown baru
+
+    if (!nama || !hari) return alert("Nama dan Hari kerja wajib diisi!");
+
+    const gDasar = (+document.getElementById("is").value) * hari;
+
+    // Logika Zonk: Jika 100.000.000 < 200.000.000 (M72+)
+    let isZonk = vol < targetMinimal;
+
+    let bNOS = 0, bVAS = 0, eVAS = 0, bSAI = 0, eSAI = 0;
+
+    if (!isZonk) {
+        bNOS = (+document.getElementById("FNC").value * 100000) +
+               (+document.getElementById("FRO").value * 50000) +
+               (+document.getElementById("NNC").value * 80000) +
+               (+document.getElementById("NRO").value * 40000);
+
+        bVAS = vPremi * 0.04;
+        if (vPremi >= 100000000) eVAS = 5000000;
+        else if (vPremi >= 50000000) eVAS = 3000000;
+        else if (vPremi >= 35000000) eVAS = 1500000;
+        else if (vPremi >= 15000000) eVAS = 500000;
+
+        bSAI = sPremi * 0.07;
+        if (sPremi >= 10000000) eSAI = 1500000;
+        else if (sPremi >= 3500000) eSAI = 500000;
+        else if (sPremi >= 1500000) eSAI = 300000;
+        else if (sPremi >= 1000000) eSAI = 100000;
+    }
+
+    // --- PERBAIKAN LOGIKA SLAB ---
+    let slab = "Red", targetSlab = 200000000;
+    if (vol >= 500000000) { slab = "Platinum"; targetSlab = 500000000; }
+    else if (vol >= 400000000) { slab = "Black"; targetSlab = 500000000; }
+    else if (vol >= 300000000) { slab = "Green"; targetSlab = 400000000; }
+    else if (vol >= 200000000) { slab = "Yellow"; targetSlab = 300000000; }
+    
+    // Rumus progress: (vol / targetSlab) * 100
+    let prog = Math.min((vol / targetSlab) * 100, 100);
+    // ----------------------------
+
+    const gross = bNOS + (bVAS + eVAS) + (bSAI + eSAI);
+    const pot = gross * potRate;
+    const total = gDasar + gross - pot;
+
+    const res = document.getElementById("hasil");
+    res.style.display = "block";
+    
+    let statusHTML = isZonk 
+        ? `<div style="background:#ffebee; color:#c62828; padding:10px; border-radius:8px; margin-bottom:15px; text-align:center; font-weight:bold; border:1px solid #c62828;">
+             TARGET MINIMAL Rp ${targetMinimal.toLocaleString()} TIDAK TERCAPAI<br>⚠️ BONUS: ZONK ⚠️
+           </div>` 
+        : "";
+
+    res.innerHTML = `
+        <h3 style="margin-bottom:5px">HASIL BONUS: ${nama}</h3>
+        ${statusHTML}
+        <div style="text-align:center; margin-bottom:15px;">
+            Slab: <span class="badge badge-${slab}">${slab}</span>
+            <div class="progress"><div class="bar" style="width:${prog}%"></div></div>
+        </div>
+
+        <div class="detail-grid">
+            <div class="sub-box">
+                <label>PENGHASILAN TETAP</label>
+                Gaji Dasar: <br><b>Rp ${gDasar.toLocaleString()}</b>
+                <hr>
+                <label>BONUS NOS</label>
+                Total NOS: <br><b>Rp ${bNOS.toLocaleString()}</b>
+            </div>
+
+            <div class="sub-box">
+                <label>DETAIL VAS</label>
+                4%: Rp ${bVAS.toLocaleString()}<br>
+                Extra: Rp ${eVAS.toLocaleString()}
+                <div class="total-line">Total: <b>Rp ${(bVAS + eVAS).toLocaleString()}</b></div>
+                
+                <label style="display:block; margin-top:8px">DETAIL SAI</label>
+                7%: Rp ${bSAI.toLocaleString()}<br>
+                Extra: Rp ${eSAI.toLocaleString()}
+                <div class="total-line">Total: <b>Rp ${(bSAI + eSAI).toLocaleString()}</b></div>
+            </div>
+        </div>
+
+        <hr>
+        <div style="font-size:13px">
+            Total Bonus Kotor: <span style="float:right">Rp ${gross.toLocaleString()}</span><br>
+            Potongan NL: <span style="float:right; color:red">-${pot.toLocaleString()}</span>
+        </div>
+        <div style="background:#c62828; color:white; padding:12px; border-radius:10px; margin-top:15px; text-align:center">
+            <small>TOTAL TERIMA (THP)</small>
+            <h2 style="color:white; margin:5px 0 0 0">Rp ${total.toLocaleString()}</h2>
+        </div>
+    `; // Hanya ada satu penutup di paling akhir
+
+    res.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
